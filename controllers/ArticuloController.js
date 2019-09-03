@@ -13,7 +13,7 @@ export default {
             next(e);
         }
     },
-
+    
     query: async(req,res,next) =>{
         try{
             const reg = await models.ArticuloModel.findOne({_id: req.query._id})
