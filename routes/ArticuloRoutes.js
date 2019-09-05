@@ -1,14 +1,15 @@
 import routerx from 'express-promise-router';
 import CategoriaController from '../controllers/ArticuloController';
+import Auth from '../middlewares/Auth';
 
 const ArticuloRoutes = routerx();
 
-ArticuloRoutes.post('/add',CategoriaController.add);
-ArticuloRoutes.get('/query',CategoriaController.query);
-ArticuloRoutes.get('/list',CategoriaController.list);
-ArticuloRoutes.put('/update',CategoriaController.update);
-ArticuloRoutes.delete('/remove',CategoriaController.remove);
-ArticuloRoutes.put('/activate',CategoriaController.activate);
-ArticuloRoutes.put('/desactivate',CategoriaController.desactivate);
+ArticuloRoutes.post('/add',Auth.verifyUsuarioAlmacenero,CategoriaController.add);
+ArticuloRoutes.get('/query',Auth.verifyUsuarioAlmacenero,CategoriaController.query);
+ArticuloRoutes.get('/list',Auth.verifyUsuarioAlmacenero,CategoriaController.list);
+ArticuloRoutes.put('/update',Auth.verifyUsuarioAlmacenero,CategoriaController.update);
+ArticuloRoutes.delete('/remove',Auth.verifyUsuarioAlmacenero,CategoriaController.remove);
+ArticuloRoutes.put('/activate',Auth.verifyUsuarioAlmacenero,CategoriaController.activate);
+ArticuloRoutes.put('/desactivate',Auth.verifyUsuarioAlmacenero,ategoriaController.desactivate);
 
 export default ArticuloRoutes;
