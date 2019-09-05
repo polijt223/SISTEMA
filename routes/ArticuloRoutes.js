@@ -10,6 +10,6 @@ ArticuloRoutes.get('/list',Auth.verifyUsuarioAlmacenero,CategoriaController.list
 ArticuloRoutes.put('/update',Auth.verifyUsuarioAlmacenero,CategoriaController.update);
 ArticuloRoutes.delete('/remove',Auth.verifyUsuarioAlmacenero,CategoriaController.remove);
 ArticuloRoutes.put('/activate',Auth.verifyUsuarioAlmacenero,CategoriaController.activate);
-ArticuloRoutes.put('/desactivate',Auth.verifyUsuarioAlmacenero,ategoriaController.desactivate);
+ArticuloRoutes.put('/desactivate',Auth.verifyUsuarioAlmacenero,CategoriaController.desactivate);
 
 export default ArticuloRoutes;
