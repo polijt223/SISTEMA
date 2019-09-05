@@ -1,5 +1,6 @@
 import models from '../models';
 import bcrypt from 'bcryptjs';
+import Token from '../services/Token'
 
 export default {
 
@@ -128,14 +129,19 @@ export default {
 
     login: async (req,res,next) =>{
         try{
-            let user = await models.UsuarioModel.findOne({email:req.body.email});
+            let user = await models.UsuarioModel.findOne({email:req.body.email,estado:1});
             if(user){
                 //Significa que el user no esta vacio y existe en la base de datos
                 //Hacemos una variable match para guardar el resultado de comparar el password ingresado con el que esta 
                 //guardado en la base de datos
                 let match = await bcrypt.compare(req.body.password,user.password);
                 if(match){
-                    res.json('Password correcto');
+                    let tokenReturn = await Token.encode(user._id);
+                    res.status(200).send({
+                        mensaje:'Se genero el token',
+                        tokenReturn,
+                        user
+                    });
                 }else{
                     //Sino significa que el password es incorrecto
                     res.status(404).send({
