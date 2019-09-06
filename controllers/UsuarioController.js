@@ -52,8 +52,8 @@ export default {
             //new RegExp es una clase que permite el uso de expresiones regulares en la consultas, en este caso la utilizamos en los parametros
             //de busqueda para que acepte mayusculas y minusculas , 'i' es justamente una expresion regular que permite no haya distinsion entre
             //Mayusculas y Minusculas, para utilizar la expresion regular primiero debemos obtenerla de req.query.valor
-            const reg = await models.UsuarioModel.find({$or:[{'nombre': new RegExp(valor,'i')},{'email': new RegExp(valor,'i')}],},{createAt:0})
-            .sort({'nombre':-1});
+            const reg = await models.UsuarioModel.find({$or:[{'nombre': new RegExp(valor,'i')},{'email': new RegExp(valor,'i')}]},{createAt:0})
+            .sort({'createAt':-1});
             res.status(200).json(reg);
         }catch(e){
             res.status(500).send({

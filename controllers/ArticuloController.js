@@ -33,12 +33,31 @@ export default {
         }
     },
 
+    queryCodigo: async(req,res,next) =>{
+        try{
+            const reg = await models.ArticuloModel.findOne({codigo: req.query.codigo})
+            .populate('CategoriaModel',{'nombre':1});
+            if (!reg) {
+                res.status(404).send({
+                    message: 'El registro no existe!'
+                });
+            }else{
+                res.status(200).json(reg);
+            }
+        }catch(e){
+            res.status(500).send({
+                message: 'Ocurrio un error' 
+            });
+            next(e);
+        }
+    },
+
     list: async(req,res,next) =>{
         try{
             let valor = req.query.valor;
-            const reg = await models.ArticuloModel.find({$or:[{'nombre': new RegExp(valor,'i')},{'descripcion': new RegExp(valor,'i')}],},{createAt:0})
+            const reg = await models.ArticuloModel.find({$or:[{'nombre': new RegExp(valor,'i')},{'descripcion': new RegExp(valor,'i')}]},{createAt:0})
             .populate('CategoriaModel',{'nombre':1})
-            .sort({'nombre':-1});
+            .sort({'createAt':-1});
             res.status(200).json(reg);
         }catch(e){
             res.status(500).send({
