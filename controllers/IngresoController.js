@@ -73,7 +73,6 @@ export default {
         }
     },
 
-
     activate: async(req,res,next) =>{
         try{
             const reg = await models.IngresoModel.findByIdAndUpdate({_id: req.body._id},{estado:1});
@@ -106,5 +105,55 @@ export default {
             });
             next(e);
         }
+    },
+
+    grafico12Meses: async(req,res,next) => {
+        try {
+            const reg = await models.IngresoModel.aggregate(
+                [
+                    {
+                        $group:{
+                            _id:{
+                                mes:{$month:"$createAt"},
+                                year:{$year:"$createAt"}
+                                },
+                            tolal:{$sum:"$total"},
+                            numero:{$sum:1}
+                        }
+                    },
+                    {
+                        $sort:{
+                            "_id.year":-1,"_id.mes":1
+                        }
+                    }
+                ]
+            ).limit(12);  
+            res.status(200).json(reg);
+
+        } catch (e) {
+            res.status(500).send({
+                mensaje:"Ocurrio un Error"
+            });
+            next(e);
+        }
+        
+    },
+
+    consultaFechas: async(req,res,next) =>{
+        try{
+            let start = req.query.start;
+            let end = req.query.end;
+            const reg = await models.IngresoModel.find({"createAt":{"$gte":start, "$lt":end}})
+            .populate('UsuarioModel',{nombre:1})
+            .populate('PersonaModel',{nombre:1})
+            .sort({'createAt':-1});
+            res.status(200).json(reg);
+        }catch(e){
+            res.status(500).send({
+                message: 'Ocurrio un error' 
+            });
+            next(e);
+        }
     }
+   
 }
