@@ -71,7 +71,7 @@ export default{
             });
         }
         //Decodificamos el token para obtener el rol
-        const response = TokenService.decode(req.headers.token);
+        const response = await TokenService.decode(req.headers.token);
         if (response.rol == 'Vendedor' || response.rol == 'Administrador') {
             //En caso de ser rol Vendedor o Administrador usamos next para permitir que el programa siga su ejecucion
             next();
