@@ -31,12 +31,12 @@ async function checkToken (token){
 }
 
 export default {
-    encode: async (_id) => {
+    encode: async (_id,email,rol) => {
         //Metodo sing de jwt esperara 3 parametros
         //primer parametro ,un id con el que hara la referencia
         //Segundo parametro,una clave secreta con la que se generara el token
         //El tercer parametro sera el tiempo de duracion del token 
-        const token = jwt.sign({_id:_id},'claveSecretaParaGenerarElToken',{expiresIn:'1d'});
+        const token = jwt.sign({_id:_id,email:email,rol:rol},'claveSecretaParaGenerarElToken',{expiresIn:'1d'});
         return token;
     },
 

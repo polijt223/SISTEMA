@@ -136,7 +136,7 @@ export default {
                 //guardado en la base de datos
                 let match = await bcrypt.compare(req.body.password,user.password);
                 if(match){
-                    let tokenReturn = await Token.encode(user._id);
+                    let tokenReturn = await Token.encode(user._id,user.email,user.rol);
                     res.status(200).send({
                         mensaje:'Se genero el token',
                         tokenReturn,

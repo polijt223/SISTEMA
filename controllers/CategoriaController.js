@@ -5,7 +5,10 @@ export default {
     add: async(req,res,next) =>{
         try{
             const reg = await models.CategoriaModel.create(req.body);
-            res.status(200).json(reg);
+            res.status(200).send({
+                message: 'Se creo con exito la nueva categoria',
+                registro: reg
+            });
         }catch(e){
             res.status(500).send({
                 message: 'Ocurrio un error' 
@@ -61,8 +64,11 @@ export default {
 
     remove: async(req,res,next) =>{
         try{
-            const reg = await models.CategoriaModel.findByIdAndDelete({_id: req.body._id});
-            res.status(200).json(reg);
+            const reg = await models.CategoriaModel.findByIdAndDelete({_id: req.query._id});
+            res.status(200).send({
+                message: 'Se elimino correctamente el registro',
+                registro: reg
+            });
         }catch(e){
             res.status(500).send({
                 message: 'Ocurrio un error' 
@@ -74,7 +80,10 @@ export default {
     activate: async(req,res,next) =>{
         try{
             const reg = await models.CategoriaModel.findByIdAndUpdate({_id: req.body._id},{estado:1});
-            res.status(200).json(reg);
+            res.status(200).send({
+                message: 'Se activo satisfactoriamente',
+                registro: reg
+            });
         }catch(e){
             res.status(500).send({
                 message: 'Ocurrio un error' 
@@ -86,7 +95,10 @@ export default {
     desactivate: async(req,res,next) =>{
         try{
             const reg = await models.CategoriaModel.findByIdAndUpdate({_id: req.body._id},{estado:0});
-            res.status(200).json(reg);            
+            res.status(200).send({
+                message: 'Se desactivo satisfactoriamente',
+                registro: reg
+            });           
         }catch(e){
             res.status(500).send({
                 message: 'Ocurrio un error' 
