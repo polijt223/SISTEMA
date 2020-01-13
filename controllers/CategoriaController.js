@@ -53,7 +53,10 @@ export default {
         try{
             const reg = await models.CategoriaModel.findByIdAndUpdate({_id:req.body._id},
                 {nombre:req.body.nombre,descripcion:req.body.descripcion});
-            res.status(200).json(reg);
+            res.status(200).send({
+                message: 'Se actualizo satisfactoriamente',
+                registro: reg
+            });
         }catch(e){
             res.status(500).send({
                 message: 'Ocurrio un error' 
