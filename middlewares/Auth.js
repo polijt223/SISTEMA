@@ -24,7 +24,7 @@ export default{
     }, 
 
     verifyUsuarioAdministrador: async (req,res,next) => {
-        //Verificamos que el token que no llega sea valido y exista
+        //Verificamos que el token que nos llega sea valido y exista
         if (!req.headers.token) {
             return res.status(404).send({
                 mensaje: 'No existe token / No esta logueado'
@@ -44,7 +44,7 @@ export default{
     },
 
     verifyUsuarioAlmacenero: async (req,res,next) => {
-        //Verificamos que el token que no llega sea valido y exista
+        //Verificamos que el token que nos llega sea valido y exista
         if (!req.headers.token) {
             return res.status(404).send({
                 mensaje: 'No existe token / No esta logueado'
