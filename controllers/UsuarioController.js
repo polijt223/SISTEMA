@@ -52,8 +52,12 @@ export default {
             //new RegExp es una clase que permite el uso de expresiones regulares en la consultas, en este caso la utilizamos en los parametros
             //de busqueda para que acepte mayusculas y minusculas , 'i' es justamente una expresion regular que permite no haya distinsion entre
             //Mayusculas y Minusculas, para utilizar la expresion regular primiero debemos obtenerla de req.query.valor
-            const reg = await models.UsuarioModel.find({$or:[{'nombre': new RegExp(valor,'i')},{'email': new RegExp(valor,'i')}]},{createAt:0})
-            .sort({'createAt':-1});
+            const reg = await models.UsuarioModel.find(
+                {$or:[
+                    {'nombre': new RegExp(valor,'i')},
+                    {'email': new RegExp(valor,'i')}
+                ]},
+                /*Sirve para filtrar campos que no queremos enviar por http *//*{createAt:0}*/).sort({'createAt':-1});
             res.status(200).json(reg);
         }catch(e){
             res.status(500).send({
@@ -80,8 +84,16 @@ export default {
             //2* le asignamos a los valores que tenemos guardados en MongoDB , los nuevos valores. Por Ejemplo:
             // rol es igual al rol que me llega por req.body  ------> rol:req.body.rol
             const reg = await models.UsuarioModel.findByIdAndUpdate({_id:req.body._id},
-                {rol:req.body.rol ,nombre:req.body.nombre,tipo_documento:req.body.tipo_documento, num_documento:req.body.num_documento,
-                     direccion:req.body.direccion, email:req.body.email, password:req.body.password }); 
+                {
+                    rol: req.body.rol,
+                    nombre: req.body.nombre,
+                    tipo_documento: req.body.tipo_documento,
+                    num_documento: req.body.num_documento,
+                    direccion: req.body.direccion,
+                    telefono: req.body.telefono, 
+                    email: req.body.email, 
+                    password: req.body.password 
+                }); 
             res.status(200).json(reg);
         }catch(e){
             res.status(500).send({
