@@ -17,7 +17,7 @@ export default {
     query: async(req,res,next) =>{
         try{
             const reg = await models.ArticuloModel.findOne({_id: req.query._id})
-            .populate('CategoriaModel',{'nombre':1});
+            .populate('categoria',{'nombre':1})
             if (!reg) {
                 res.status(404).send({
                     message: 'El registro no existe!'
@@ -36,7 +36,7 @@ export default {
     queryCodigo: async(req,res,next) =>{
         try{
             const reg = await models.ArticuloModel.findOne({codigo: req.query.codigo})
-            .populate('CategoriaModel',{'nombre':1});
+            .populate('categoria',{'nombre':1})
             if (!reg) {
                 res.status(404).send({
                     message: 'El registro no existe!'
@@ -55,8 +55,14 @@ export default {
     list: async(req,res,next) =>{
         try{
             let valor = req.query.valor;
-            const reg = await models.ArticuloModel.find({$or:[{'nombre': new RegExp(valor,'i')},{'descripcion': new RegExp(valor,'i')}]},{createAt:0})
-            .populate('CategoriaModel',{'nombre':1})
+            const reg = await models.ArticuloModel.find(
+                {$or:[
+                    {'nombre': new RegExp(valor,'i')},
+                    {'descripcion': new RegExp(valor,'i')}
+                ]},
+                /*{createAt:0}*//*Sirve para filtrar el envio de fecha por http*/
+            )
+            .populate('categoria',{'nombre':1})
             .sort({'createAt':-1});
             res.status(200).json(reg);
         }catch(e){
@@ -92,7 +98,7 @@ export default {
 
     remove: async(req,res,next) =>{
         try{
-            const reg = await models.ArticuloModel.findByIdAndDelete({_id: req.body._id});
+            const reg = await models.ArticuloModel.findByIdAndDelete({_id: req.query._id});
             res.status(200).json(reg);
         }catch(e){
             res.status(500).send({

@@ -6,7 +6,7 @@ const CategoriaRoutes = routerx();
 
 CategoriaRoutes.post('/add',Auth.verifyUsuarioAlmacenero,CategoriaController.add);
 CategoriaRoutes.get('/query',Auth.verifyUsuarioAlmacenero,CategoriaController.query);
-CategoriaRoutes.get('/list',Auth.verifyUsuarioAlmacenero,CategoriaController.list);
+CategoriaRoutes.get('/list',Auth.verifyUsuario,CategoriaController.list);
 CategoriaRoutes.put('/update',Auth.verifyUsuarioAlmacenero,CategoriaController.update);
 CategoriaRoutes.delete('/remove',Auth.verifyUsuarioAlmacenero,CategoriaController.remove);
 CategoriaRoutes.put('/activate',Auth.verifyUsuarioAlmacenero,CategoriaController.activate);
