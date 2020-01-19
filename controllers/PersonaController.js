@@ -61,7 +61,7 @@ export default {
             //  ([$or{parametros para buscar en la DB},{'tipo_persona':'Cliente'}],{createAt:0})   
             //  {createAt:0} Sirve para indicar con 0 que datos no queremos traer de la DB
             const reg = await models.PersonaModel.find(
-                {$or:[{'nombre': new RegExp(valor,'i')},{'email': new RegExp(valor,'i')}],'tipo_persona':'Cliente'},{createAt:0})
+                {$or:[{'nombre': new RegExp(valor,'i')},{'email': new RegExp(valor,'i')}],'tipo_persona':'Cliente'})
             .sort({'createAt':-1});
             res.status(200).json(reg);
         }catch(e){
@@ -79,7 +79,7 @@ export default {
             //  ([$or{parametros para buscar en la DB},{'tipo_persona':'Cliente'}],{createAt:0})   
             //  {createAt:0} Sirve para indicar con 0 que datos no queremos traer de la DB
             const reg = await models.PersonaModel.find(
-                {$or:[{'nombre': new RegExp(valor,'i')},{'email': new RegExp(valor,'i')}],'tipo_persona':'Proveedor'},{createAt:0})
+                {$or:[{'nombre': new RegExp(valor,'i')},{'email': new RegExp(valor,'i')}],'tipo_persona':'Proveedor'})
             .sort({'createAt':-1});
             res.status(200).json(reg);
         }catch(e){
@@ -109,7 +109,7 @@ export default {
 
     remove: async(req,res,next) =>{
         try{
-            const reg = await models.PersonaModel.findByIdAndDelete({_id:req.body._id});
+            const reg = await models.PersonaModel.findByIdAndDelete({_id:req.query._id});
             res.status(200).json(reg);
         }catch(e){
             res.status(500).send({
