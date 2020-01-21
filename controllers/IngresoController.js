@@ -61,8 +61,8 @@ export default {
         try{
             let valor = req.query.valor;
             const reg = await models.IngresoModel.find({$or:[{'num_comprobante': new RegExp(valor,'i')},{'serie_comprobante': new RegExp(valor,'i')}]},{createAt:0})
-            .populate('UsuarioModel',{nombre:1})
-            .populate('PersonaModel',{nombre:1})
+            .populate('usuario',{nombre:1})
+            .populate('persona',{nombre:1})
             .sort({'createAt':-1});
             res.status(200).json(reg);
         }catch(e){
