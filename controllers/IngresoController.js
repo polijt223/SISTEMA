@@ -38,8 +38,8 @@ export default {
             //{nombre:1} Si pasamo un segundo parametro de esta forma con 1 decimos que solo traiga ese registro y con cero {nombre:0}
             //Le estamos diciendo que no traiga ese registro.
             const reg = await models.IngresoModel.findOne({_id: req.query._id})
-            .populate('UsuarioModel',{nombre:1})
-            .populate('PersonaModel',{nombre:1});
+            .populate('usuario',{nombre:1})
+            .populate('persona',{nombre:1});
 
             if (!reg) {
                 res.status(404).send({
@@ -144,8 +144,8 @@ export default {
             let start = req.query.start;
             let end = req.query.end;
             const reg = await models.IngresoModel.find({"createAt":{"$gte":start, "$lt":end}})
-            .populate('UsuarioModel',{nombre:1})
-            .populate('PersonaModel',{nombre:1})
+            .populate('usuario',{nombre:1})
+            .populate('persona',{nombre:1})
             .sort({'createAt':-1});
             res.status(200).json(reg);
         }catch(e){
